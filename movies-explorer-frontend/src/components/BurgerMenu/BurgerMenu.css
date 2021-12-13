@@ -1,0 +1,112 @@
+.burger-menu__opened {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  max-width: 520px;
+  margin: 0;
+  padding: 159px 0 90px 0;
+  z-index: 2;
+  background-color: #202020;
+  overflow-y: auto;
+  transform: translateX(+100%);
+  transition: transform .5s;
+  will-change: transform;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.burger-menu__switcher {
+  display: none;
+}
+
+.burger-menu__button-opened {
+  position: relative;
+  display: inline-block;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 44px;
+  height: 44px;
+  cursor: pointer;
+  background-image: url(../../images/burger-button.svg);
+}
+
+.burger-menu__button-closed {
+  position: fixed;
+  top: 23px;
+  right: 23px;
+  display: none;
+  z-index: 3;
+  cursor: pointer;
+  background-image: url(../../images/burger-close.svg);
+  transform: rotate(45deg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  width: 22px;
+  height: 22px;
+}
+
+.burger-menu__item {
+  display: block;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  margin-top: 28px;
+  font-size: 18px;
+  line-height: 1.2;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.burger-menu__item:first-of-type {
+  margin-top: 0;
+}
+
+.burger-menu__item_active {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.burger-menu__item-profile {
+  border: none;
+  background-color: transparent;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 12px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+}
+
+.burger-menu__profile-image {
+  background-color: #313131;
+  border-radius: 50px;
+  padding: 8px;
+  margin-left: 7px;
+}
+
+.burger-menu__switcher:checked~ .burger-menu__button-closed {
+  display: block;
+}
+
+.burger-menu__switcher:checked~ .burger-menu__opened {
+  transform: translateX(0);
+}
+
+@media screen and (max-width: 768px) {
+  .burger-menu__opened {
+    width: 100%;
+    padding: 144px 0 46px 0;
+  }
+
+  .burger-menu__item {  
+    margin-top: 24px;
+  }
+}

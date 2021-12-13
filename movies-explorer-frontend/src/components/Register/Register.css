@@ -1,0 +1,148 @@
+.register {
+  max-width: 396px;
+  width: 100%;
+  padding-top: 70px;
+  margin: 0 auto;
+}
+
+.register__title {
+  margin: 40px 0;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 29px;
+  color: #fff;
+}
+
+.register__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register__field {
+  width: 100%;
+  height: 68px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #8B8B8B;
+}
+
+.register__input {
+  background-color: #2F2F2F;
+  border: 0;
+  border-radius: 8px;
+  outline: none;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #fff;
+  padding: 15px;
+}
+
+.register__input::placeholder {
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 16px;
+  color: #fff;
+}
+
+.register__button {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  color: #fff;
+  background-color: #4285F4;
+  border-radius: 3px;
+  border: 0;
+  padding: 13px 125px 15px;
+  margin-top: 69px;
+  cursor: pointer;
+}
+
+.register__addition {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register__already-registered {
+  margin-top: 16px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  color: #8B8B8B;
+}
+
+.register__login {
+  margin-left: 6px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 17px;
+  text-decoration: none;
+  color: #4285F4;
+}
+
+@media screen and (max-width: 1279px) {
+  .register {
+    padding-top: 232px;
+  }
+
+  .register__addition {
+    margin-bottom: 232px;
+  }
+
+  .register__title {
+    margin: 40px 0;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .register {
+    max-width: 260px;
+    padding-top: 56px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-sizing: border-box;
+  }
+
+  .register__logo {
+    width: 38px;
+    height: 38px;
+  }
+
+  .register__title {
+    margin: 50px auto 80px;
+  }
+
+  .register__form {
+    max-width: 260px;
+  }
+
+  .register__button {
+    font-size: 12px;
+    line-height: 15px;
+    padding: 15px 68px 15px;
+    margin-top: 172px;
+  }
+
+  .register__already-registered {
+    margin-top: 14px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+  
+  .register__login {
+    margin-left: 7px;
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  .register__addition {
+    margin-bottom: 30px;
+  }
+}

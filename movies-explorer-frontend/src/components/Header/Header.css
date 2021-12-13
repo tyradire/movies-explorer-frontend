@@ -1,0 +1,86 @@
+.header {
+  display: flex;
+  height: 74px;
+  width: 100%;
+  padding: 0 70px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+  box-sizing: border-box;
+  background-color: #073042;
+  margin: 0 auto;
+}
+
+.header__logo {
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+}
+
+.header__logo:hover {
+  opacity: .7;
+  transition: .3s;
+}
+
+.header__buttons {
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+}
+
+.header__signup {
+  border: none;
+  outline: 0;
+  font: inherit;
+  background-color: transparent;
+  cursor: pointer;
+  color: #fff;
+  text-decoration: none;
+}
+
+.header__signup:hover {
+  color: #000;
+  transition: .2s;
+}
+
+.header__signin {
+  background-color: #3DDC84;
+  border-radius: 3px;
+  outline: 0;
+  font: inherit;
+  color: #000;
+  cursor: pointer;
+  border-style: none;
+  padding: 8px 20px;
+  margin-left: 30px;
+  text-decoration: none;
+}
+
+.header__signin:hover {
+  border: none;
+  opacity: 0.6;
+  background-color: transparent;
+  outline: 1px solid #FFFFFF;
+  color: #fff;
+}
+
+@media screen and (max-width: 1279px) {
+  .header {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header {
+    padding: 0 14px;
+  }
+
+  .header__buttons {
+    font-size: 10px;
+  }
+
+  .header__signin {
+    padding: 5px 12px;
+    margin-left: 14px;
+  }
+}

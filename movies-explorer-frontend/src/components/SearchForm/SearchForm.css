@@ -1,0 +1,120 @@
+.search-form {
+  background-color: #202020;
+  padding: 80px 70px 83px;
+  display: flex;
+  width: 100%;
+  box-sizing: border-box;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(170,170,170, .2);
+}
+
+.search-form__field-wrapper {
+  position: relative;
+  max-width: 932px;
+  width: 100%;
+}
+
+.search-form__field {
+  background-color: transparent;
+  opacity: .2;
+  border: 1.5px solid #AAAAAA;
+  box-sizing: border-box;
+  border-radius: 50px;
+  padding: 15px 0 15px 22px;
+  width: 100%;
+  transition: .3s;
+}
+
+.search-form__field:focus {
+  outline: none;
+  color: #fff;
+  opacity: 1;
+  transition: .3s;
+}
+
+.search-form__button {
+  position: absolute;
+  width: 59px;
+  height: 34px;
+  right: 7px;
+  top: 7px;
+  background-color: #4285F4;
+  border-radius: 48px;
+  border: none;
+  font-weight: 500;
+  font-size: 11px;
+  line-height: 18px;
+  color: #fff;
+}
+
+.search-form__short-film {
+  margin: 0;
+  font-weight: normal;
+  font-size: 13px;
+  line-height: 18px;
+  color: #fff;
+}
+
+.search-form__filter-wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.search-form__checkbox {
+  margin-left: 14px;
+}
+
+.search-form__checkbox-input {
+  display: none;
+}
+
+.search-form__checkbox-input:checked ~ .search-form__checkbox-wrapper {
+  background-color: rgb(136, 136, 136);
+}
+
+.search-form__checkbox-input:checked ~ .search-form__checkbox-wrapper::before {
+  left: 6px;
+  transition: .7s;
+}
+
+.search-form__checkbox-wrapper {
+  color: inherit;
+  position: relative;
+  width: 36px;
+  height: 20px;
+  background-color: #3DDC84;
+  border-radius: 20px;
+  transition: .7s;
+}
+
+.search-form__checkbox-wrapper::before {
+  content: '';
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  top: calc(50% - 4px);
+  right: 6px;
+  background-color: #fff;
+  transition: .7s;
+}
+
+@media screen and (max-width: 1279px) {
+  .search-form {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .search-form__filter-wrapper {
+    margin-top: 38px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .search-form {
+    padding: 60px 10px 45px;
+  }
+}
+
+
+

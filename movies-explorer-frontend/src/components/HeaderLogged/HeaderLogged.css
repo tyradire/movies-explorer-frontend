@@ -1,0 +1,79 @@
+.header-logged {
+  display: flex;
+  height: 74px;
+  width: 100%;
+  padding: 0 70px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: transparent;
+  box-sizing: border-box;
+  position: relative;
+  margin: 0 auto;
+}
+
+.header-logged__logo {
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+}
+
+.header-logged__logo:hover {
+  opacity: .7;
+  transition: .3s;
+}
+
+.header-logged__buttons {
+  display: flex;
+  font-weight: 500;
+  font-size: 12px;
+  line-height: 16px;
+  align-items: center;
+}
+
+.header-logged__movies {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 18px;
+  margin-right: 20px;
+}
+.header-logged__saved-movies {
+  text-decoration: none;
+  color: #fff;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 18px;
+  margin-right: 50px;
+}
+
+.header-logged__profile {
+  text-decoration: none;
+  color: #fff;
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 12px;
+  display: flex;
+  align-items: center;
+}
+
+.header-logged__profile-icon {
+  width: 10px;
+  height: 10px;
+  margin-left: 7px;
+  background-color: #313131;
+  border-radius: 50px;
+  padding: 8px;
+}
+
+@media screen and (max-width: 1279px) {
+  .header-logged {
+    padding: 0 30px;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .header-logged {
+    padding: 0 14px;
+  }
+}

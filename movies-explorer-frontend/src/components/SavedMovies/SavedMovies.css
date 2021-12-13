@@ -1,0 +1,33 @@
+.movies-card {
+  width: 360px;
+}
+
+.movies__image {
+  border-radius: 6px;
+}
+
+.movies__description-wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.movies__name {
+  font-weight: 500;
+  font-size: 13px;
+  line-height: 16px;
+  color: #fff;
+  margin: 0;
+}
+
+.movies__duration {
+  font-weight: normal;
+  font-size: 11px;
+  line-height: 10px;
+  color: #8B8B8B;
+  background-color: #2F2F2F;
+  border-radius: 3px;
+  padding: 3px 4px;
+  margin: 0;
+}

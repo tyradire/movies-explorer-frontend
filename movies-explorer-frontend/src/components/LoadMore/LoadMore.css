@@ -1,0 +1,16 @@
+.load-more {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 50px auto 80px;
+  text-align: center;
+}
+
+.load-more__button {
+  width: 320px;
+  padding: 11px 0 9px;
+  background-color: #2F2F2F;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  color: #fff;
+}
