@@ -14,11 +14,34 @@ import Profile from '../Profile/Profile';
 import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { getMovies } from '../../utils/MoviesApi';
 import './App.css';
 
 function App() {
+
+  const [movies, setMovies] = useState([]);
+  const [filtredMovies, setFiltredMovies] = useState([]);
+
+  const [queue, setQueue] = useState(3);
+  const [step, setStep] = useState(3);
+
+  useEffect(() => {
+    getMovies()
+    .then((res) => {
+      console.log(res)
+      setMovies(res);
+    })
+  }, [])
+
+  const filter = (input, checked) => {
+    input = input.toLowerCase();
+    setFiltredMovies(movies.filter((item) => (item.nameRU.toLowerCase().includes(input) || (item.nameEN ? item.nameEN.toLowerCase().includes(input) : false))
+    && (checked ? true : item.duration > 40)
+    ))
+  }
+
   return (
     <div className="App">
       <div className="page-container">
@@ -35,9 +58,9 @@ function App() {
           </Route>
           <Route exact path="/movies">
             <HeaderLogged/>
-            <SearchForm/>
-            <MoviesCardList/>
-            <LoadMore/>
+            <SearchForm filter={filter} />
+            <MoviesCardList filtredMovies={filtredMovies} queue={queue} />
+            {(queue <= filtredMovies.length) ? <LoadMore queue={queue} step={step} setQueue={setQueue} /> : ''}
             <Footer/>
           </Route>
           <Route exact path="/saved-movies">
