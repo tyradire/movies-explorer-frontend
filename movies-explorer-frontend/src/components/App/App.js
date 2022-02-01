@@ -35,6 +35,29 @@ function App() {
     })
   }, [])
 
+  const setCardRow = () => {
+    if (window.innerWidth >= 1280) {
+      setQueue(12);
+      setStep(3);
+      return
+    }
+    if (window.innerWidth > 480) {
+      setQueue(8);
+      setStep(2);
+      return
+    }
+    setQueue(5);
+    setStep(2);
+  }
+
+  useEffect(() => {
+    window.addEventListener('resize', setCardRow);
+    setCardRow();
+    return () => {
+      window.removeEventListener('resize', setCardRow);
+    };
+  }, []);
+
   const filter = (input, checked) => {
     input = input.toLowerCase();
     setFiltredMovies(movies.filter((item) => (item.nameRU.toLowerCase().includes(input) || (item.nameEN ? item.nameEN.toLowerCase().includes(input) : false))
@@ -84,16 +107,6 @@ function App() {
             <NotFound/>
           </Route>
         </Switch>
-        {/* 
-        
-        <Header/>
-        
-        
-        
-        <Promo/>
-        <AboutProject/>
-        
-         */}
       </BrowserRouter>
       </div>
     </div>
