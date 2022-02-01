@@ -4,13 +4,18 @@
 
 .movies-card__image-wrapper {
   position: relative;
+  max-height: 201px;
 }
 
-.movies-card__image-wrapper:hover .movies-card__button {
+.movies-card__image-wrapper:hover .movies-card__checkbox-wrapper {
   display: block;
 }
 
-.movies-card__button {
+.movies-card__button-wrapper {
+  text-align: center;
+}
+
+/* .movies-card__button {
   display: none;
   position: absolute;
   padding: 6px 7px;
@@ -24,12 +29,55 @@
   line-height: 9px;
   color: #fff;
   cursor: pointer;
+} */
+
+.movies-card__checkbox-input {
+  display: none;
+}
+
+.movies-card__checkbox-wrapper {
+  display: none;
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  color: inherit;
+  background-color: #313131;
+  border-radius: 30px;
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 9px;
+  color: #fff;
+  cursor: pointer;
+  padding: 6px 7px;
+}
+
+.movies-card__checkbox-input:checked ~ .movies-card__checkbox-wrapper {
+  background-color: #EE3465;
+  font-size: 0px;
+  width: 21px;
+  height: 21px;
+  padding: 0;
+  background-image: url(../../images/accept-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.movies-card__checkbox-input:checked ~ .movies-card__checkbox-wrapper:hover {
+  background-color: #313131;
+  background-image: url(../../images/remove-icon.svg);
+}
+
+.movies-card__checkbox-wrapper::before {
+  content: '';
+  position: absolute;
 }
 
 .movies-card__image {
   width: 100%;
+  height: 201px;
   margin: 0 auto;
   border-radius: 6px;
+  object-fit: fill;
 }
 
 .movies-card__description-wrapper {
@@ -43,8 +91,12 @@
   font-weight: 500;
   font-size: 13px;
   line-height: 16px;
+  width: 250px;
   color: #fff;
   margin: 0;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 .movies-card__duration {
@@ -54,8 +106,9 @@
   color: #8B8B8B;
   background-color: #2F2F2F;
   border-radius: 3px;
-  padding: 3px 4px;
   margin: 0;
+  padding: 0;
+  padding: 3px 4px;
 }
 
 @media screen and (max-width: 1279px) {
@@ -72,5 +125,9 @@
   .movies-card__image-wrapper {
     width: 100%;
     margin: 0 auto;
+  }
+
+  .movies-card__name {
+    width: 240px;
   }
 }

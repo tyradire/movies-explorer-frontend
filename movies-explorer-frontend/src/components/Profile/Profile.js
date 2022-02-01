@@ -3,6 +3,7 @@ const name = 'Виталий';
 const email = 'pochta@yandex.ru';
 
 function Profile() {
+
   return (
     <div className="profile">
       <h2 className="profile__title">Привет, {name}!</h2>
