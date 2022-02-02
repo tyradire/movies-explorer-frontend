@@ -15,11 +15,14 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import React, { useEffect, useState } from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import { getMovies } from '../../utils/MoviesApi';
+import { register } from '../../utils/ApiAuth';
 import './App.css';
 
 function App() {
+
+  const history = useHistory();
 
   const [movies, setMovies] = useState([]);
   const [filtredMovies, setFiltredMovies] = useState([]);
@@ -65,10 +68,19 @@ function App() {
     ))
   }
 
+  const handleRegisterSubmit = (name, email, password) => {
+    register({ name, email, password })
+    .then(() => {
+      history.push('/signin');
+    })
+    .catch((res) => {
+      console.log(res)
+    })
+  }
+
   return (
     <div className="App">
       <div className="page-container">
-      <BrowserRouter>
         <Switch>
           <Route exact path="/">
             <Header/>
@@ -98,7 +110,7 @@ function App() {
             <Profile/>
           </Route>
           <Route exact path="/signup">
-            <Register/>
+            <Register onSubmitRegister={handleRegisterSubmit} />
           </Route>
           <Route exact path="/signin">
             <Login/>
@@ -107,7 +119,6 @@ function App() {
             <NotFound/>
           </Route>
         </Switch>
-      </BrowserRouter>
       </div>
     </div>
   );
