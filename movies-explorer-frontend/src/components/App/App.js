@@ -1,13 +1,8 @@
-import Header from '../Header/Header';
 import HeaderLogged from '../HeaderLogged/HeaderLogged';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import LoadMore from '../LoadMore/LoadMore';
-import Promo from '../Promo/Promo';
-import AboutProject from '../AboutProject/AboutProject';
-import Techs from '../Techs/Techs';
-import AboutMe from '../AboutMe/AboutMe';
-import Portfolio from '../Portfolio/Portfolio';
+import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Profile from '../Profile/Profile';
 //import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
@@ -17,12 +12,13 @@ import NotFound from '../NotFound/NotFound';
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
 import { getMovies } from '../../utils/MoviesApi';
-import { register } from '../../utils/ApiAuth';
+import { register, authorize } from '../../utils/ApiAuth';
 import './App.css';
 
 function App() {
 
   const history = useHistory();
+  const [loggedIn, setLoggedIn] = useState(false);
 
   const [movies, setMovies] = useState([]);
   const [filtredMovies, setFiltredMovies] = useState([]);
@@ -78,18 +74,32 @@ function App() {
     })
   }
 
+  const handleLoginSubmit = (email, password) => {
+    authorize({ email, password })
+    .then((res) => {
+      console.log(res);
+      setLoggedIn(true);
+      //history.push('/movies');
+    })
+    .catch((res) => {
+      console.log(res);
+    })
+  }
+
   return (
     <div className="App">
       <div className="page-container">
         <Switch>
+          <Route exact path="/signup">
+            {/* {loggedIn ? <Redirect to="/movies" /> : <Register onSubmitRegister={handleRegisterSubmit} />} */}
+            <Register onSubmitRegister={handleRegisterSubmit} />
+          </Route>
+          <Route exact path="/signin">
+            {/* {loggedIn ? <Redirect to="/movies" /> : <Login loggedIn={loggedIn} onSubmitLogin={handleLoginSubmit} />} */}
+            <Login loggedIn={loggedIn} onSubmitLogin={handleLoginSubmit}/>
+          </Route>
           <Route exact path="/">
-            <Header/>
-            <Promo/>
-            <AboutProject/>
-            <Techs/>
-            <AboutMe/>
-            <Portfolio/>
-            <Footer/>
+            <Main />
           </Route>
           <Route exact path="/movies">
             <HeaderLogged/>
@@ -108,12 +118,6 @@ function App() {
           <Route exact path="/profile">
             <HeaderLogged/>
             <Profile/>
-          </Route>
-          <Route exact path="/signup">
-            <Register onSubmitRegister={handleRegisterSubmit} />
-          </Route>
-          <Route exact path="/signin">
-            <Login/>
           </Route>
           <Route exact path='*'>
             <NotFound/>

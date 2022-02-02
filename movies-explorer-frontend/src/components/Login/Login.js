@@ -2,15 +2,23 @@ import './Login.css';
 import logo from '../../images/logo.svg';
 import React, { useState, useEffect } from 'react';
 
-function Login({ onSubmitLogin }) {
+function Login({ onSubmitLogin, loggedIn }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = (evt) => {
+    evt.preventDefault();
     onSubmitLogin(email, password)
   };
+
+  const changeEmail = (evt) => {
+    setEmail(evt.target.value)
+  }
+
+  const changePassword = (evt) => {
+    setPassword(evt.target.value)
+  }
 
   const resetForm = () => {
     setEmail('');
@@ -18,6 +26,7 @@ function Login({ onSubmitLogin }) {
   };
 
   useEffect(() => {
+    console.log(loggedIn)
     resetForm();
   }, []);
 
@@ -36,7 +45,7 @@ function Login({ onSubmitLogin }) {
             type="email"
             placeholder="Почта"
             autoComplete="off"
-            onChange={e => setEmail(e.target.value)}
+            onChange={changeEmail}
             required
           />
         </label>
@@ -50,7 +59,7 @@ function Login({ onSubmitLogin }) {
             type="password"
             placeholder="Пароль"
             autoComplete="off"
-            onChange={e => setPassword(e.target.value)}
+            onChange={changePassword}
             required
           />
         </label>
