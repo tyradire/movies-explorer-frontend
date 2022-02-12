@@ -1,14 +1,23 @@
 import './SavedMovies.css';
-import movie from '../../images/movie.jpg';
+import MoviesCard from '../MoviesCard/MoviesCard';
+import HeaderLogged from '../HeaderLogged/HeaderLogged';
+import SearchForm from '../SearchForm/SearchForm';
+import MoviesCardList from '../MoviesCardList/MoviesCardList';
 
-function SavedMovies() {
+function SavedMovies(props) {
   return (
-    <div className="movies-card">
-      <img src={movie} alt="Фильм" className="movies__image"/>
-      <div className="movies__description-wrapper">
-        <p className="movies__name">33 слова о дизайне</p>
-        <p className="movies__duration">1ч 17м</p>
-      </div>
+    <div className="saved-movies">
+      {
+       props.savedMovies.map((movie) => {
+        return (
+          <MoviesCard
+            handleSaveMovie={props.handleSaveMovie}
+            key={movie.id} 
+            isSaved={true}
+            {...movie} />
+        )
+        })
+      }
     </div>
   );
 }

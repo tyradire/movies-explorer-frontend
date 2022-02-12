@@ -1,33 +1,24 @@
-.movies-card {
-  width: 360px;
+.saved-movies {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 80px 0 28px;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(3, 360px);
+  gap: 60px 30px;
 }
 
-.movies__image {
-  border-radius: 6px;
+@media screen and (max-width: 1279px) {
+  .saved-movies {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 70px 0 12px;
+    grid-template-columns: repeat(2, 339px);
+  }
 }
 
-.movies__description-wrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 14px;
-}
-
-.movies__name {
-  font-weight: 500;
-  font-size: 13px;
-  line-height: 16px;
-  color: #fff;
-  margin: 0;
-}
-
-.movies__duration {
-  font-weight: normal;
-  font-size: 11px;
-  line-height: 10px;
-  color: #8B8B8B;
-  background-color: #2F2F2F;
-  border-radius: 3px;
-  padding: 3px 4px;
-  margin: 0;
+@media screen and (max-width: 767px) {
+  .saved-movies {
+    grid-template-columns: 300px;
+  }
 }

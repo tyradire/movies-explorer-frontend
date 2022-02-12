@@ -1,6 +1,6 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import React, { useState } from 'react';
+import React from 'react';
 
 function MoviesCardList(props) {
 
@@ -9,7 +9,8 @@ function MoviesCardList(props) {
       {
        props.filtredMovies.slice(0, props.queue).map((movie) => {
         return (
-          <MoviesCard 
+          <MoviesCard
+            handleSaveMovie={props.handleSaveMovie}
             key={movie.id} 
             {...movie} />
         )

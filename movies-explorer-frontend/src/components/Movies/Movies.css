@@ -1,0 +1,24 @@
+.movies {
+  width: 100%;
+  box-sizing: border-box;
+  margin: 80px 0 28px;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(3, 360px);
+  gap: 60px 30px;
+}
+
+@media screen and (max-width: 1279px) {
+  .movies {
+    width: 100%;
+    box-sizing: border-box;
+    margin: 70px 0 12px;
+    grid-template-columns: repeat(2, 339px);
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .movies {
+    grid-template-columns: 300px;
+  }
+}
