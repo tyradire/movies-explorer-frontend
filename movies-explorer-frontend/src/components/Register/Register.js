@@ -40,7 +40,7 @@ function Register( { onSubmitRegister } ) {
       <a href="http://localhost:3000/"><img src={logo} alt="Логотип" className="register__logo"/></a>
       <h2 className="register__title">Добро пожаловать!</h2>
       <form onSubmit={handleSubmit} className="register__form">
-        <label className="register__field" for="name">
+        <label className="register__field" htmlFor="name">
           Имя
           <input
             onChange={changeName}
@@ -54,7 +54,7 @@ function Register( { onSubmitRegister } ) {
             required
           />
         </label>
-        <label className="register__field" for="email">
+        <label className="register__field" htmlFor="email">
           E-mail
           <input
             onChange={changeEmail}
@@ -68,7 +68,7 @@ function Register( { onSubmitRegister } ) {
             required
           />
         </label>
-        <label className="register__field" for="password">
+        <label className="register__field" htmlFor="password">
           Пароль
           <input
             onChange={changePassword}

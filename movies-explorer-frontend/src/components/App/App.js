@@ -36,6 +36,7 @@ function App() {
   }, [loggedIn])
 
   useEffect(() => {
+    if (!loggedIn) return;
     api.getSavedMovies()
     .then((savedMoviesAPI) => {
       setSavedMovies(savedMoviesAPI.map((item) => { return {isSaved: true, ...item} }));
@@ -166,6 +167,7 @@ function App() {
             />
             <ProtectedRoute exact path="/profile"
               component={Profile}
+              loggedIn={loggedIn}
               handleSignOut={handleSignOut}
               handleEdit={handleEdit}
             />

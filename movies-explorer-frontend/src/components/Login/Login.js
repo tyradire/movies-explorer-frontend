@@ -35,7 +35,7 @@ function Login({ onSubmitLogin, loggedIn }) {
       <a href="http://localhost:3000/"><img src={logo} alt="Логотип" className="login__logo"/></a>
       <h2 className="login__title">Рады видеть!</h2>
       <form onSubmit={handleSubmit} className="login__form">
-        <label className="login__field" for="email">
+        <label className="login__field" htmlFor="email">
           E-mail
           <input 
             className="login__input"
@@ -49,7 +49,7 @@ function Login({ onSubmitLogin, loggedIn }) {
             required
           />
         </label>
-        <label className="login__field" for="password">
+        <label className="login__field" htmlFor="password">
           Пароль
           <input 
             className="login__input"
