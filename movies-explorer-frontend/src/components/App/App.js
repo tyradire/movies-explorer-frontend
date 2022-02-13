@@ -142,11 +142,9 @@ function App() {
             </Route>
             <Route exact path="/signup">
               {loggedIn ? <Redirect to="/movies" /> : <Register onSubmitRegister={handleRegisterSubmit} />}
-              {/* <Register onSubmitRegister={handleRegisterSubmit} /> */}
             </Route>
             <Route exact path="/signin">
               {loggedIn ? <Redirect to="/movies" /> : <Login loggedIn={loggedIn} onSubmitLogin={handleLoginSubmit} />}
-              {/* <Login loggedIn={loggedIn} onSubmitLogin={handleLoginSubmit}/> */}
             </Route>
             <ProtectedRoute exact path="/movies"
               component={Movies}
@@ -166,9 +164,11 @@ function App() {
               savedMovies={savedMovies}
               setSavedMovies={setSavedMovies}
             />
-            <Route exact path="/profile">
-              <Profile handleSignOut={handleSignOut} handleEdit={handleEdit} />
-            </Route>
+            <ProtectedRoute exact path="/profile"
+              component={Profile}
+              handleSignOut={handleSignOut}
+              handleEdit={handleEdit}
+            />
             <Route exact path='*'>
               <NotFound />
             </Route>
