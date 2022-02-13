@@ -42,7 +42,7 @@ function App() {
       setSavedMovies(savedMoviesAPI.map((item) => { return {isSaved: true, ...item} }));
     })
     .catch((err) => console.log(err));
-  }, [])
+  }, [loggedIn])
 
   useEffect(() => {
     const jwt = localStorage.getItem('jwt');
