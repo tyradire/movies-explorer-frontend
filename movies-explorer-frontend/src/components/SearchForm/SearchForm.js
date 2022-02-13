@@ -13,7 +13,7 @@ function SearchForm(props) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    props.filter(input, checked);
+    props.filter(input, checked, props.movies, props.setMovies);
   }
 
   const changeShortFilmCheckbox = () => {

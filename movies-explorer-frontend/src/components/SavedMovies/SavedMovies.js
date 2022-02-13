@@ -1,23 +1,22 @@
 import './SavedMovies.css';
-import MoviesCard from '../MoviesCard/MoviesCard';
-import HeaderLogged from '../HeaderLogged/HeaderLogged';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
+import React, { useEffect, useState } from 'react';
 
-function SavedMovies(props) {
+function SavedMovies({ savedMovies, queue, handleSaveMovie, filter }) {
+
+  const [filtredMovies, setFiltredMovies] = useState(savedMovies);
+
+  useEffect(() => {
+    setFiltredMovies(filtredMovies.filter((elem) => {
+      return savedMovies.some((item) => item.movieId == elem.movieId)
+    }));
+  }, [savedMovies])
+
   return (
     <div className="saved-movies">
-      {
-       props.savedMovies.map((movie) => {
-        return (
-          <MoviesCard
-            handleSaveMovie={props.handleSaveMovie}
-            key={movie.id} 
-            isSaved={true}
-            {...movie} />
-        )
-        })
-      }
+      <SearchForm filter={filter} movies={savedMovies} setMovies={setFiltredMovies} />
+      <MoviesCardList moviesArray={filtredMovies} queue={queue} handleSaveMovie={handleSaveMovie} likeBtnClass={`movies-card__saved-checkbox-input`}/>
     </div>
   );
 }

@@ -15,23 +15,11 @@
   text-align: center;
 }
 
-/* .movies-card__button {
-  display: none;
-  position: absolute;
-  padding: 6px 7px;
-  right: 14px;
-  top: 14px;
-  background-color: #313131;
-  border-radius: 30px;
-  border: none;
-  font-weight: normal;
-  font-size: 10px;
-  line-height: 9px;
-  color: #fff;
-  cursor: pointer;
-} */
-
 .movies-card__checkbox-input {
+  display: none;
+}
+
+.movies-card__saved-checkbox-input {
   display: none;
 }
 
@@ -47,8 +35,8 @@
   font-size: 10px;
   line-height: 9px;
   color: #fff;
-  cursor: pointer;
   padding: 6px 7px;
+  cursor: pointer;
 }
 
 .movies-card__checkbox-input:checked ~ .movies-card__checkbox-wrapper {
@@ -60,11 +48,23 @@
   background-image: url(../../images/accept-icon.svg);
   background-repeat: no-repeat;
   background-position: center;
+  display: block;
 }
 
 .movies-card__checkbox-input:checked ~ .movies-card__checkbox-wrapper:hover {
   background-color: #313131;
   background-image: url(../../images/remove-icon.svg);
+}
+
+.movies-card__saved-checkbox-input:checked ~ .movies-card__checkbox-wrapper {
+  background-color: #313131;
+  background-image: url(../../images/remove-icon.svg);
+  background-repeat: no-repeat;
+  background-position: center;
+  font-size: 0px;
+  width: 21px;
+  height: 21px;
+  padding: 0;
 }
 
 .movies-card__checkbox-wrapper::before {
@@ -78,6 +78,7 @@
   margin: 0 auto;
   border-radius: 6px;
   object-fit: fill;
+  cursor: pointer;
 }
 
 .movies-card__description-wrapper {

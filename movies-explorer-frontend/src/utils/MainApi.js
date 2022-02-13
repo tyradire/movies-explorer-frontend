@@ -60,7 +60,7 @@ class Api {
 
   getSavedMovies() {
     this._headers.authorization = localStorage.getItem('jwt');
-    return fetch(this._url+'/movies', {
+    return fetch(this._url+`/movies`, {
       headers: this._headers
     }).then(this._handleResponse)
   }

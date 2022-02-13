@@ -48,6 +48,10 @@
   color: #fff;
 }
 
+.search-form__button:hover {
+  cursor: pointer;
+}
+
 .search-form__short-film {
   margin: 0;
   font-weight: normal;
@@ -63,6 +67,10 @@
 
 .search-form__checkbox {
   margin-left: 14px;
+}
+
+.search-form__checkbox:hover {
+  cursor: pointer;
 }
 
 .search-form__checkbox-input {

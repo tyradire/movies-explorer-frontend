@@ -1,9 +1,7 @@
 import Header from '../Header/Header';
 import HeaderLogged from '../HeaderLogged/HeaderLogged';
-import SearchForm from '../SearchForm/SearchForm';
 import Movies from '../Movies/Movies';
 import SavedMovies from '../SavedMovies/SavedMovies';
-import LoadMore from '../LoadMore/LoadMore';
 import Main from '../Main/Main';
 import Footer from '../Footer/Footer';
 import Profile from '../Profile/Profile';
@@ -13,7 +11,6 @@ import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import React, { useEffect, useState } from 'react';
 import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
-import { getMovies } from '../../utils/MoviesApi';
 import { register, authorize, getToken } from '../../utils/ApiAuth';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import api from '../../utils/MainApi';
@@ -25,8 +22,6 @@ function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({name: '', email: ''});
 
-  const [movies, setMovies] = useState([]);
-  const [filtredMovies, setFiltredMovies] = useState([]);
   const [savedMovies, setSavedMovies] = useState([]);
 
   const [queue, setQueue] = useState(3);
@@ -36,31 +31,16 @@ function App() {
     if (!loggedIn) return;
     api.getUserInfo()
     .then((res) => {
-      console.log(res);
       setCurrentUser({name: res.name, email: res.email});
     })
   }, [loggedIn])
 
-  // useEffect(() => {
-  //   getMovies()
-  //   .then((res) => {
-  //     console.log(res)
-  //     setMovies(res);
-  //   })
-  // }, [])
-
   useEffect(() => {
-    Promise.all([getMovies(), api.getSavedMovies()])
-    .then(([ moviesAPI, savedMoviesAPI ]) => {
-      console.log(moviesAPI)
-      console.log(savedMoviesAPI)
-      setSavedMovies(savedMoviesAPI);
-      setMovies(moviesAPI.map((movie) => {
-        //console.log(savedMovies.some((elem) => movie.id == elem.movieId))
-        movie.image = 'https://api.nomoreparties.co'+movie.image.url;
-        return { isSaved: savedMoviesAPI.some((elem) => movie.id == elem.movieId), movieId: movie.id, ...movie }
-      }))
+    api.getSavedMovies()
+    .then((savedMoviesAPI) => {
+      setSavedMovies(savedMoviesAPI.map((item) => { return {isSaved: true, ...item} }));
     })
+    .catch((err) => console.log(err));
   }, [])
 
   useEffect(() => {
@@ -76,18 +56,11 @@ function App() {
   }, []);
 
   const handleSaveMovie = (isSaved, movie) => {
-    console.log(savedMovies)
     api.changeMovieSaveStatus(isSaved, isSaved ? savedMovies.find((item) => item.movieId == movie.movieId)._id : movie)
     .then((res) => {
-      if (!isSaved) setSavedMovies([res, ...savedMovies])
+      if (!isSaved) setSavedMovies([{isSaved: true, ...res}, ...savedMovies])
       else setSavedMovies(savedMovies.filter(elem => elem.movieId !== res.movieId))
-      setMovies(movies.map((item) => {
-        item.isSaved = item.id == res.movieId ? !item.isSaved : item.isSaved;
-        return item;
-      } ));
-
     })
-    .then(() => console.log('saved movies ', savedMovies))
     .catch((err) => console.log(err))
   }
 
@@ -114,17 +87,9 @@ function App() {
     };
   }, []);
 
-  const filter = (input, checked) => {
-    console.log(movies)
+  const filter = (input, checked, moviesForSearch, setMovies) => {
     input = input.toLowerCase();
-    setFiltredMovies(movies.filter((item) => (item.nameRU.toLowerCase().includes(input) || (item.nameEN ? item.nameEN.toLowerCase().includes(input) : false))
-    && (checked ? true : item.duration > 40)
-    ))
-  }
-
-  const savedMoviesFilter = (input, checked) => {
-    input = input.toLowerCase();
-    setSavedMovies(movies.filter((item) => (item.nameRU.toLowerCase().includes(input) || (item.nameEN ? item.nameEN.toLowerCase().includes(input) : false))
+    setMovies(moviesForSearch.filter((item) => (item.nameRU.toLowerCase().includes(input) || (item.nameEN ? item.nameEN.toLowerCase().includes(input) : false))
     && (checked ? true : item.duration > 40)
     ))
   }
@@ -187,24 +152,30 @@ function App() {
               component={Movies}
               loggedIn={loggedIn}
               filter={filter}
-              handleSaveMovie={handleSaveMovie} 
-              filtredMovies={filtredMovies} 
+              handleSaveMovie={handleSaveMovie}
+              savedMovies={savedMovies}
               queue={queue}
               step={step}
               setQueue={setQueue}
             />
-            <Route exact path="/saved-movies">
-              <SearchForm savedMoviesFilter={savedMoviesFilter} />
-              <SavedMovies handleSaveMovie={handleSaveMovie} savedMovies={savedMovies} />
-              <Footer/>
-            </Route>
+            <ProtectedRoute exact path="/saved-movies"
+              component={SavedMovies}
+              loggedIn={loggedIn}
+              filter={filter}
+              handleSaveMovie={handleSaveMovie} 
+              savedMovies={savedMovies}
+              setSavedMovies={setSavedMovies}
+            />
             <Route exact path="/profile">
               <Profile handleSignOut={handleSignOut} handleEdit={handleEdit} />
             </Route>
             <Route exact path='*'>
-              <NotFound/>
+              <NotFound />
             </Route>
           </Switch>
+          <Route exact path={['/', '/movies', '/saved-movies']}>
+            <Footer />
+          </Route>
         </div>
       </div>
     </CurrentUserContext.Provider>
