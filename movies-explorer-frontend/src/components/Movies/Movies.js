@@ -21,7 +21,7 @@ function Movies({ filter, queue, handleSaveMovie, step, setQueue, savedMovies, i
     .then((moviesAPI) => {
       const newMovies = moviesAPI.map((movie) => {
         movie.image = 'https://api.nomoreparties.co/'+movie.image.url;
-        return { isSaved: savedMovies.some((elem) => movie.id == elem.movieId), movieId: movie.id, ...movie }
+        return { isSaved: savedMovies.some((elem) => movie.id == elem.movieId), movieId: movie.id, trailer: movie.trailerLink, ...movie }
       })
       setMovies(newMovies)
       return newMovies;
