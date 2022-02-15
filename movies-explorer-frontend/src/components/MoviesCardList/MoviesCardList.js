@@ -5,8 +5,7 @@ function MoviesCardList(props) {
 
   return (
     <div className="movies-cardlist">
-      {
-       props.moviesArray.slice(0, props.queue).map((movie) => {
+      { props.moviesArray.slice(0, props.queue).map((movie) => {
         return (
           <MoviesCard
             likeBtnClass={props.likeBtnClass}

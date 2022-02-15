@@ -37,7 +37,7 @@ function Register( { onSubmitRegister } ) {
 
   return (
     <div className='register'>
-      <a href="http://localhost:3000/"><img src={logo} alt="Логотип" className="register__logo"/></a>
+      <Link to="/"><img src={logo} alt="Логотип" className="register__logo"/></Link>
       <h2 className="register__title">Добро пожаловать!</h2>
       <form onSubmit={handleSubmit} className="register__form">
         <label className="register__field" htmlFor="name">

@@ -8,6 +8,10 @@
   gap: 60px 30px;
 }
 
+.movies-cardlist__empty {
+ color: #fff;
+}
+
 @media screen and (max-width: 1279px) {
   .movies-cardlist {
     width: 100%;

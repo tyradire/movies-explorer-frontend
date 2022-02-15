@@ -16,7 +16,8 @@ function SearchForm(props) {
     props.filter(input, checked, props.movies, props.setMovies);
   }
 
-  const changeShortFilmCheckbox = () => {
+   function changeShortFilmCheckbox()  {
+    props.filter(input, !checked, props.filtredMovies, props.setMovies);
     setChecked(!checked);
   }
 

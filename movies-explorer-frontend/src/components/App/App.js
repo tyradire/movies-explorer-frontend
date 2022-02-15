@@ -10,7 +10,7 @@ import Register from '../Register/Register';
 import Login from '../Login/Login';
 import NotFound from '../NotFound/NotFound';
 import React, { useEffect, useState } from 'react';
-import { Route, Switch, Redirect, useHistory } from 'react-router-dom';
+import { Route, Switch, Redirect, useHistory, useLocation } from 'react-router-dom';
 import { register, authorize, getToken } from '../../utils/ApiAuth';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import api from '../../utils/MainApi';
@@ -19,13 +19,17 @@ import './App.css';
 function App() {
 
   const history = useHistory();
+  const location = useLocation();
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = useState({name: '', email: ''});
+
+  const [isLoading, setIsLoading] = useState(true);
 
   const [savedMovies, setSavedMovies] = useState([]);
 
   const [queue, setQueue] = useState(3);
   const [step, setStep] = useState(3);
+  const [isEmptyResult, setIsEmptyResult] = useState(false);
 
   useEffect(() => {
     if (!loggedIn) return;
@@ -40,17 +44,22 @@ function App() {
     api.getSavedMovies()
     .then((savedMoviesAPI) => {
       setSavedMovies(savedMoviesAPI.map((item) => { return {isSaved: true, ...item} }));
+      setIsLoading(false)
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err)
+      if (err === 404) setSavedMovies([]);
+    });
   }, [loggedIn])
 
   useEffect(() => {
+    const path = location.pathname;
     const jwt = localStorage.getItem('jwt');
     if (jwt) {
       getToken(jwt)
       .then((res) => {
           setLoggedIn(true);
-          history.push('/');
+          history.push(path);
         })
       .catch(err => console.log(err))
     }
@@ -90,15 +99,17 @@ function App() {
 
   const filter = (input, checked, moviesForSearch, setMovies) => {
     input = input.toLowerCase();
-    setMovies(moviesForSearch.filter((item) => (item.nameRU.toLowerCase().includes(input) || (item.nameEN ? item.nameEN.toLowerCase().includes(input) : false))
+    const filtredMovies = moviesForSearch.filter((item) => (item.nameRU.toLowerCase().includes(input) || (item.nameEN ? item.nameEN.toLowerCase().includes(input) : false))
     && (checked ? true : item.duration > 40)
-    ))
+    )
+    setMovies(filtredMovies)
+    filtredMovies.length > 0 ? setIsEmptyResult(false) : setIsEmptyResult(true) ;
   }
 
   const handleRegisterSubmit = (name, email, password) => {
     register({ name, email, password })
     .then(() => {
-      history.push('/signin');
+      handleLoginSubmit(email, password);
     })
     .catch((res) => {
       console.log(res)
@@ -116,18 +127,21 @@ function App() {
     })
   }
 
-  const handleEdit = (user) => {
+  const handleEdit = (user, button) => {
     api.editUserInfo(user.name, user.email)
     .then((res) => {
       setCurrentUser(res);
+      button.textContent = `Данные сохранены`;
+      setTimeout(() => button.textContent = `Редактировать`, 2000);
     })
     .catch(err => console.log(err))
   }
 
   function handleSignOut () {
     localStorage.removeItem('jwt');
+    localStorage.removeItem('inputRequest');
     setLoggedIn(false);
-    history.push('/signin');
+    history.push('/');
   }
 
   return (
@@ -156,6 +170,8 @@ function App() {
               queue={queue}
               step={step}
               setQueue={setQueue}
+              isEmptyResult={isEmptyResult}
+              setIsEmptyResult={setIsEmptyResult}
             />
             <ProtectedRoute exact path="/saved-movies"
               component={SavedMovies}
@@ -164,6 +180,8 @@ function App() {
               handleSaveMovie={handleSaveMovie} 
               savedMovies={savedMovies}
               setSavedMovies={setSavedMovies}
+              isEmptyResult={isEmptyResult}
+              setIsEmptyResult={setIsEmptyResult}
             />
             <ProtectedRoute exact path="/profile"
               component={Profile}

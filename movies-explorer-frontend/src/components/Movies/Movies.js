@@ -4,11 +4,17 @@ import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import LoadMore from '../LoadMore/LoadMore';
 import React, { useEffect, useState } from 'react';
 import { getMovies } from '../../utils/MoviesApi';
+import Preloader from '../Preloader/Preloader';
 
-function Movies({ filter, queue, handleSaveMovie, step, setQueue, savedMovies }) {
+function Movies({ filter, queue, handleSaveMovie, step, setQueue, savedMovies, isEmptyResult, setIsEmptyResult }) {
 
   const [movies, setMovies] = useState([]);
   const [filtredMovies, setFiltredMovies] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  
+  useEffect(() => {
+    setIsEmptyResult(false);
+  }, [])
 
   useEffect(() => {
     getMovies()
@@ -21,10 +27,11 @@ function Movies({ filter, queue, handleSaveMovie, step, setQueue, savedMovies })
       return newMovies;
     })
     .then((res) => {
+      setIsLoading(false);
       const inputRequest = JSON.parse(localStorage.getItem('inputRequest'))
       if (inputRequest) {
       filter(inputRequest.input, inputRequest.checked, res, setFiltredMovies);
-    }
+      } else setFiltredMovies(res);
     })
   }, [])
 
@@ -42,8 +49,10 @@ function Movies({ filter, queue, handleSaveMovie, step, setQueue, savedMovies })
 
   return(
     <div className="movies">
-      <SearchForm filter={allMoviesFilter} movies={movies} setMovies={setFiltredMovies} />
-      <MoviesCardList moviesArray={filtredMovies} queue={queue} handleSaveMovie={handleSaveMovie} likeBtnClass={`movies-card__checkbox-input`}/>
+      <SearchForm filter={allMoviesFilter} movies={movies} setMovies={setFiltredMovies} filtredMovies={filtredMovies} />
+      {isLoading ? <Preloader /> : ''}
+      {isEmptyResult ? <p className='movies-cardlist__empty'>«Ничего не найдено»</p> : ''}
+      <MoviesCardList moviesArray={filtredMovies} queue={queue} handleSaveMovie={handleSaveMovie} isLoading={isLoading} likeBtnClass={`movies-card__checkbox-input`}/>
       {(queue <= filtredMovies.length) ? <LoadMore queue={queue} step={step} setQueue={setQueue} /> : ''}
     </div>
   );

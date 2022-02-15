@@ -43,6 +43,7 @@
   font-size: 11px;
   line-height: 13px;
   text-align: right;
+  color: #fff;
 }
 
 .profile__form-input::placeholder {
@@ -58,6 +59,11 @@
   color: #fff;
   cursor: pointer;
   margin-top: 220px;
+}
+
+.profile__button-save:disabled {
+  color: rgb(121, 121, 121);
+  cursor: default;
 }
 
 .profile__button-exit {

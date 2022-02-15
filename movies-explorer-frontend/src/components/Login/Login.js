@@ -1,6 +1,7 @@
 import './Login.css';
 import logo from '../../images/logo.svg';
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 function Login({ onSubmitLogin, loggedIn }) {
 
@@ -32,7 +33,7 @@ function Login({ onSubmitLogin, loggedIn }) {
 
   return (
     <div className='login'>
-      <a href="http://localhost:3000/"><img src={logo} alt="Логотип" className="login__logo"/></a>
+      <Link to="/"><img src={logo} alt="Логотип" className="login__logo"/></Link>
       <h2 className="login__title">Рады видеть!</h2>
       <form onSubmit={handleSubmit} className="login__form">
         <label className="login__field" htmlFor="email">
@@ -66,7 +67,7 @@ function Login({ onSubmitLogin, loggedIn }) {
         <button className="login__button">Войти</button>
         <div className="login__addition">
           <p className='login__already-registered'>Ещё не зарегистрированы?</p>
-          <a className="login__login" href="http://localhost:3000/signup">Регистрация</a>
+          <Link className="login__login" to="/signup">Регистрация</Link>
         </div>
       </form>
     </div>
