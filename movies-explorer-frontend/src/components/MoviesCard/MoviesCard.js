@@ -2,7 +2,7 @@ import './MoviesCard.css';
 
 function MoviesCard({ isSaved, nameRU, duration, image, handleSaveMovie, likeBtnClass, trailerLink, ...movie }) {
 
-  const currentMovie = { nameRU, duration, image, ...movie };
+  const currentMovie = { nameRU, duration, image, trailerLink, ...movie };
 
   const normalDuration = (duration) => {
     if (duration >= 60){ return (`${Math.trunc(duration/60)}ч ${duration%60}м`)}
