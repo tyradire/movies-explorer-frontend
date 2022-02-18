@@ -25,6 +25,7 @@ function App() {
   const [currentUser, setCurrentUser] = useState({name: '', email: ''});
 
   const [isLoading, setIsLoading] = useState(true);
+  const [isSending, setIsSending] = useState(false);
 
   const [savedMovies, setSavedMovies] = useState([]);
 
@@ -119,6 +120,7 @@ function App() {
   }
 
   const handleRegisterSubmit = (name, email, password) => {
+    setIsSending(true);
     register({ name, email, password })
     .then(() => {
       handleLoginSubmit(email, password);
@@ -127,9 +129,13 @@ function App() {
       console.log(err);
       setRegisterError(ERRORS[err]);
     })
+    .finally(() => {
+      setIsSending(false);
+    })
   }
 
   const handleLoginSubmit = (email, password) => {
+    setIsSending(true);
     authorize({ email, password })
     .then((res) => {
       localStorage.setItem('jwt', res.token);
@@ -139,9 +145,13 @@ function App() {
       console.log(err);
       setLoginError(ERRORS[err]);
     })
+    .finally(() => {
+      setIsSending(false);
+    })
   }
 
   const handleEdit = (user, button) => {
+    setIsSending(true);
     api.editUserInfo(user.name, user.email)
     .then((res) => {
       setCurrentUser(res);
@@ -151,6 +161,9 @@ function App() {
     .catch(err => {
       console.log(err)
       setProfileError(ERRORS[err]);
+    })
+    .finally(() => {
+      setIsSending(false);
     })
   }
 
@@ -176,7 +189,7 @@ function App() {
               {loggedIn ? <Redirect to="/movies" /> : <Register onSubmitRegister={handleRegisterSubmit} registerError={registerError} />}
             </Route>
             <Route exact path="/signin">
-              {loggedIn ? <Redirect to="/movies" /> : <Login loggedIn={loggedIn} onSubmitLogin={handleLoginSubmit} loginError={loginError} />}
+              {loggedIn ? <Redirect to="/movies" /> : <Login loggedIn={loggedIn} onSubmitLogin={handleLoginSubmit} loginError={loginError} isSending={isSending} />}
             </Route>
             <ProtectedRoute exact path="/movies"
               component={Movies}
@@ -209,6 +222,7 @@ function App() {
               handleEdit={handleEdit}
               currentUser={currentUser}
               profileError={profileError}
+              isSending={isSending}
             />
             <Route exact path='*'>
               <NotFound />

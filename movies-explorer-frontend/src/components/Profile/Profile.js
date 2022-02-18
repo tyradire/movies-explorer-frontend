@@ -3,7 +3,7 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
 import { REG_EMAIL, REG_NAME } from '../../utils/constants';
 
-function Profile({handleSignOut, handleEdit, profileError}) {
+function Profile({handleSignOut, handleEdit, profileError, isSending}) {
 
   const profile = React.useContext(CurrentUserContext);
 
@@ -55,19 +55,39 @@ function Profile({handleSignOut, handleEdit, profileError}) {
       <form className="profile__form">
         <label className="profile__field">
           Имя
-          <input onChange={changeName} id="name" className="profile__form-input" type="text" minLength="2" maxLength="30" value={name} placeholder={profile.name}/>
+          <input
+            onChange={changeName}
+            id="name"
+            className="profile__form-input"
+            type="text"
+            minLength="2"
+            maxLength="30"
+            value={name}
+            placeholder={profile.name}
+            disabled={isSending}
+          />
         </label>
         <span className="profile__form-input-error" >
           {nameError}
         </span>
         <label className="profile__field">
           E-mail
-          <input onChange={changeEmail} id="email" className="profile__form-input" type="email" minLength="2" maxLength="30" value={email} placeholder={profile.email}/>
+          <input 
+            onChange={changeEmail} 
+            id="email"
+            className="profile__form-input"
+            type="email"
+            minLength="2"
+            maxLength="30"
+            value={email}
+            placeholder={profile.email}
+            disabled={isSending}
+          />
         </label>
         <span className="profile__form-input-error" >
           {emailError}
         </span>
-        <button onClick={handleButtonEdit} disabled={buttonDisabled} className="profile__button-save">Редактировать</button>
+        <button onClick={handleButtonEdit} disabled={(buttonDisabled || isSending)} className="profile__button-save">Редактировать</button>
         <button onClick={handleButtonExit} className="profile__button-exit">Выйти из аккаунта</button>
       </form>
     </div>

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { REG_EMAIL } from '../../utils/constants';
 
-function Login({ onSubmitLogin, loggedIn, loginError }) {
+function Login({ onSubmitLogin, loggedIn, loginError, isSending }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -63,6 +63,7 @@ function Login({ onSubmitLogin, loggedIn, loginError }) {
             placeholder="Почта"
             autoComplete="off"
             onChange={changeEmail}
+            disabled={isSending}
             pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
             required
           />
@@ -80,13 +81,14 @@ function Login({ onSubmitLogin, loggedIn, loginError }) {
             placeholder="Пароль"
             autoComplete="off"
             onChange={changePassword}
+            disabled={isSending}
             required
           />
         </label>
         <span className="login__input-error" id="password-error">
           {passwordError}
         </span>
-        <button className="login__button" disabled={buttonDisabled} >Войти</button>
+        <button className="login__button" disabled={(buttonDisabled || isSending)} >Войти</button>
         <div className="login__addition">
           <p className='login__already-registered'>Ещё не зарегистрированы?</p>
           <Link className="login__login" to="/signup">Регистрация</Link>

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
 import { REG_EMAIL, REG_NAME } from '../../utils/constants';
 
-function Register( { onSubmitRegister, registerError } ) {
+function Register( { onSubmitRegister, registerError, isSending } ) {
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -68,6 +68,7 @@ function Register( { onSubmitRegister, registerError } ) {
             type="text"
             placeholder="Имя"
             autoComplete="off"
+            disabled={isSending}
             required
           />
         </label>
@@ -86,6 +87,7 @@ function Register( { onSubmitRegister, registerError } ) {
             placeholder="Почта"
             autoComplete="off"
             pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
+            disabled={isSending}
             required
           />
         </label>
@@ -103,13 +105,14 @@ function Register( { onSubmitRegister, registerError } ) {
             type="password"
             placeholder="Пароль"
             autoComplete="off"
+            disabled={isSending}
             required
           />
         </label>
         <span className="register__input-error" >
           {passwordError}
         </span>
-        <button type="submit" className="register__button" disabled={buttonDisabled} >Зарегистрироваться</button>
+        <button type="submit" className="register__button" disabled={(buttonDisabled || isSending)} >Зарегистрироваться</button>
         <div className="register__addition">
           <p className='register__already-registered'>Уже зарегистрированы?</p>
           <Link className="register__login" to="/signin">Войти</Link>
