@@ -1,7 +1,12 @@
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
+import React, { useEffect, useState } from 'react';
 
 function MoviesCardList(props) {
+
+  useEffect(() => {
+    console.log('filtredmovies ', props.moviesArray)
+  }, [props.moviesArray])
 
   return (
     <div className="movies-cardlist">

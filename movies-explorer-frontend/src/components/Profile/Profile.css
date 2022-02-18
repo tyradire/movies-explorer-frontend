@@ -50,6 +50,14 @@
   color: #fff;
 }
 
+.profile__form-input-error {
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+  margin-bottom: 10px;
+}
+
 .profile__button-save {
   border: none;
   background-color: transparent;

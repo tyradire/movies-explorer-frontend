@@ -40,5 +40,5 @@ export const getToken = (jwt) => {
 }
 
 const checkResponse = (response) => {
-  return response.ok ? response.json() : Promise.reject(`Ошибка: ${response.status}`);
+  return response.ok ? response.json() : Promise.reject(response.status);
 }

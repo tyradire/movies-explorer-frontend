@@ -11,7 +11,7 @@ function Movies({ filter, queue, handleSaveMovie, step, setQueue, savedMovies, i
   const [movies, setMovies] = useState([]);
   const [filtredMovies, setFiltredMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useEffect(() => {
     setIsEmptyResult(false);
   }, [])
@@ -49,7 +49,9 @@ function Movies({ filter, queue, handleSaveMovie, step, setQueue, savedMovies, i
 
   return(
     <div className="movies">
-      <SearchForm filter={allMoviesFilter} movies={movies} setMovies={setFiltredMovies} filtredMovies={filtredMovies} />
+      <SearchForm filter={allMoviesFilter} movies={movies} setMovies={setFiltredMovies} filtredMovies={filtredMovies} 
+      request={JSON.parse(localStorage.getItem('inputRequest')) ? JSON.parse(localStorage.getItem('inputRequest')).input : null}
+      checked={JSON.parse(localStorage.getItem('inputRequest')) ? JSON.parse(localStorage.getItem('inputRequest')).checked : null} />
       {isLoading ? <Preloader /> : ''}
       {isEmptyResult ? <p className='movies-cardlist__empty'>«Ничего не найдено»</p> : ''}
       <MoviesCardList moviesArray={filtredMovies} queue={queue} handleSaveMovie={handleSaveMovie} isLoading={isLoading} likeBtnClass={`movies-card__checkbox-input`}/>

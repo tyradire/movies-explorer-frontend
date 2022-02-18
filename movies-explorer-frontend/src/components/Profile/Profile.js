@@ -3,15 +3,20 @@ import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
 
 
-function Profile({handleSignOut, handleEdit}) {
+function Profile({handleSignOut, handleEdit, profileError}) {
 
   const profile = React.useContext(CurrentUserContext);
 
   const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  const regName = /[a-zA-Zа-яА-Я\s-]/;
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+
   const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  const [nameError, setNameError] = useState('');
+  const [emailError, setEmailError] = useState('');
 
   const handleButtonExit = (evt) => {
     evt.preventDefault();
@@ -24,19 +29,27 @@ function Profile({handleSignOut, handleEdit}) {
   }
 
   useEffect(() => {
+    setEmailError(profileError);
+  }, [profileError])
+
+  useEffect(() => {
     setName(profile.name);
     setEmail(profile.email);
+    setButtonDisabled(true);
   }, [profile])
+
+  useEffect(() => {
+    ((name === profile.name && email === profile.email) || !regex.test(email)) ? setButtonDisabled(true) : setButtonDisabled(false);
+  }, [name, email])
 
   const changeName = (evt) => {
     setName(evt.target.value);
-    name === evt.target.value ? setButtonDisabled(true) : setButtonDisabled(false);
+    (!regName.test(evt.target.value)) ? setNameError('Поле имя содержит только латиницу, кириллицу, пробел или дефис') : setNameError('');
   }
 
   const changeEmail = (evt) => {
     setEmail(evt.target.value);
-    //console.log(regex.test(evt.target.value))
-    (email === evt.target.value || !regex.test(evt.target.value)) ? setButtonDisabled(true) : setButtonDisabled(false);
+    (!regex.test(evt.target.value)) ? setEmailError('Поле e-mail должно соответствовать шаблону почты') : setEmailError('');
   }
 
   return (
@@ -47,10 +60,16 @@ function Profile({handleSignOut, handleEdit}) {
           Имя
           <input onChange={changeName} id="name" className="profile__form-input" type="text" minLength="2" maxLength="30" value={name} placeholder={profile.name}/>
         </label>
+        <span className="profile__form-input-error" >
+          {nameError}
+        </span>
         <label className="profile__field">
           E-mail
           <input onChange={changeEmail} id="email" className="profile__form-input" type="email" minLength="2" maxLength="30" value={email} placeholder={profile.email}/>
         </label>
+        <span className="profile__form-input-error" >
+          {emailError}
+        </span>
         <button onClick={handleButtonEdit} disabled={buttonDisabled} className="profile__button-save">Редактировать</button>
         <button onClick={handleButtonExit} className="profile__button-exit">Выйти из аккаунта</button>
       </form>

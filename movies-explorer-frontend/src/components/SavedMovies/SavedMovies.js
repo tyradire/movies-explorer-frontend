@@ -12,14 +12,18 @@ function SavedMovies({ savedMovies, queue, handleSaveMovie, filter, isEmptyResul
   }, [])
 
   useEffect(() => {
+    if (filtredMovies.length === 0) {
+      setFiltredMovies(savedMovies); 
+      return;
+    }
     setFiltredMovies(filtredMovies.filter((elem) => {
-      return savedMovies.some((item) => item.movieId == elem.movieId)
+      return savedMovies.some((item) => item.movieId == elem.movieId);
     }));
   }, [savedMovies])
 
   return (
     <div className="saved-movies">
-      <SearchForm filter={filter} movies={savedMovies} setMovies={setFiltredMovies} />
+      <SearchForm filter={filter} movies={savedMovies} filtredMovies={filtredMovies} setMovies={setFiltredMovies} checked={null}/>
       {isEmptyResult ? <p className='movies-cardlist__empty'>«Ничего не найдено»</p> : ''}
       <MoviesCardList moviesArray={filtredMovies} queue={queue} handleSaveMovie={handleSaveMovie} likeBtnClass={`movies-card__saved-checkbox-input`}/>
     </div>

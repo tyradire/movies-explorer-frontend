@@ -31,6 +31,18 @@ function App() {
   const [step, setStep] = useState(3);
   const [isEmptyResult, setIsEmptyResult] = useState(false);
 
+  const [registerError, setRegisterError] = useState('');
+  const [loginError, setLoginError] = useState('');
+  const [profileError, setProfileError] = useState('');
+
+  const errors = {
+    409: 'Email уже зарегистрирован',
+    400: 'Некорректные данные',
+    500: 'Ошибка на сервере',
+    401: 'Неверные почта или пароль',
+    404: 'Данные не найдены'
+  }
+
   useEffect(() => {
     if (!loggedIn) return;
     api.getUserInfo()
@@ -98,9 +110,10 @@ function App() {
   }, []);
 
   const filter = (input, checked, moviesForSearch, setMovies) => {
+    localStorage.setItem('input', input)
     input = input.toLowerCase();
     const filtredMovies = moviesForSearch.filter((item) => (item.nameRU.toLowerCase().includes(input) || (item.nameEN ? item.nameEN.toLowerCase().includes(input) : false))
-    && (checked ? true : item.duration > 40)
+    && (checked ? item.duration > 40 : true)
     )
     setMovies(filtredMovies)
     filtredMovies.length > 0 ? setIsEmptyResult(false) : setIsEmptyResult(true) ;
@@ -111,8 +124,9 @@ function App() {
     .then(() => {
       handleLoginSubmit(email, password);
     })
-    .catch((res) => {
-      console.log(res)
+    .catch((err) => {
+      console.log(err);
+      setRegisterError(errors[err]);
     })
   }
 
@@ -122,8 +136,9 @@ function App() {
       localStorage.setItem('jwt', res.token);
       setLoggedIn(true);
     })
-    .catch((res) => {
-      console.log(res);
+    .catch((err) => {
+      console.log(err);
+      setLoginError(errors[err]);
     })
   }
 
@@ -134,7 +149,10 @@ function App() {
       button.textContent = `Данные сохранены`;
       setTimeout(() => button.textContent = `Редактировать`, 2000);
     })
-    .catch(err => console.log(err))
+    .catch(err => {
+      console.log(err)
+      setProfileError(errors[err]);
+    })
   }
 
   function handleSignOut () {
@@ -156,10 +174,10 @@ function App() {
               <Main />
             </Route>
             <Route exact path="/signup">
-              {loggedIn ? <Redirect to="/movies" /> : <Register onSubmitRegister={handleRegisterSubmit} />}
+              {loggedIn ? <Redirect to="/movies" /> : <Register onSubmitRegister={handleRegisterSubmit} registerError={registerError} />}
             </Route>
             <Route exact path="/signin">
-              {loggedIn ? <Redirect to="/movies" /> : <Login loggedIn={loggedIn} onSubmitLogin={handleLoginSubmit} />}
+              {loggedIn ? <Redirect to="/movies" /> : <Login loggedIn={loggedIn} onSubmitLogin={handleLoginSubmit} loginError={loginError} />}
             </Route>
             <ProtectedRoute exact path="/movies"
               component={Movies}
@@ -188,6 +206,8 @@ function App() {
               loggedIn={loggedIn}
               handleSignOut={handleSignOut}
               handleEdit={handleEdit}
+              currentUser={currentUser}
+              profileError={profileError}
             />
             <Route exact path='*'>
               <NotFound />

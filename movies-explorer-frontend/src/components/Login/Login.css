@@ -50,6 +50,24 @@
   color: #fff;
 }
 
+.login__input:invalid {
+  color: #EE3465;
+  caret-color: #fff;
+}
+
+.login__input:valid {
+  color: #fff;
+  border: 1px solid rgb(50, 139, 62)
+}
+
+.login__input-error {
+  font-weight: normal;
+  font-size: 10px;
+  line-height: 12px;
+  color: #EE3465;
+  margin-bottom: 10px;
+}
+
 .login__button {
   font-weight: 500;
   font-size: 14px;
@@ -61,6 +79,11 @@
   padding: 13px 125px 15px;
   margin-top: 69px;
   cursor: pointer;
+}
+
+.login__button:disabled {
+  background-color: rgb(121, 121, 121);
+  cursor: default;
 }
 
 .login__addition {

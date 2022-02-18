@@ -3,10 +3,21 @@ import logo from '../../images/logo.svg';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-function Login({ onSubmitLogin, loggedIn }) {
+function Login({ onSubmitLogin, loggedIn, loginError }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const [buttonDisabled, setButtonDisabled] = useState(true);
+
+  const [emailError, setEmailError] = useState('');
+  const [passwordError, setPasswordError] = useState('');
+
+  const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
+  
+  useEffect(() => {
+    setPasswordError(loginError);
+  }, [loginError])
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
@@ -14,12 +25,18 @@ function Login({ onSubmitLogin, loggedIn }) {
   };
 
   const changeEmail = (evt) => {
-    setEmail(evt.target.value)
+    setEmail(evt.target.value);
+    (!regex.test(evt.target.value)) ? setEmailError('Поле e-mail должно соответствовать шаблону почты') : setEmailError('');
   }
 
   const changePassword = (evt) => {
     setPassword(evt.target.value)
+    evt.target.value.length < 2 ? setPasswordError('Пароль должен содержать не менее 2 символов') : setPasswordError('');
   }
+
+  useEffect(() => {
+    (!regex.test(email) || password.length < 2) ? setButtonDisabled(true) : setButtonDisabled(false);
+  }, [email, password])
 
   const resetForm = () => {
     setEmail('');
@@ -47,15 +64,18 @@ function Login({ onSubmitLogin, loggedIn }) {
             placeholder="Почта"
             autoComplete="off"
             onChange={changeEmail}
+            pattern="^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$"
             required
           />
         </label>
+        <span className="login__input-error" id="email-error">
+          {emailError}
+        </span>
         <label className="login__field" htmlFor="password">
           Пароль
           <input 
             className="login__input"
             minLength="2"
-            maxLength="30"
             name="password"
             type="password"
             placeholder="Пароль"
@@ -64,7 +84,10 @@ function Login({ onSubmitLogin, loggedIn }) {
             required
           />
         </label>
-        <button className="login__button">Войти</button>
+        <span className="login__input-error" id="password-error">
+          {passwordError}
+        </span>
+        <button className="login__button" disabled={buttonDisabled} >Войти</button>
         <div className="login__addition">
           <p className='login__already-registered'>Ещё не зарегистрированы?</p>
           <Link className="login__login" to="/signup">Регистрация</Link>

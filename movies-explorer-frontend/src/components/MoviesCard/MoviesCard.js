@@ -16,7 +16,7 @@ function MoviesCard({ isSaved, nameRU, duration, image, handleSaveMovie, likeBtn
   return (
     <div className="movies-card">
       <div className="movies-card__image-wrapper">
-        <a href={trailer}><img src={image} alt="Фильм" className="movies-card__image"/></a>
+        <a target="_blank" href={trailer} rel="noreferrer"><img src={image} alt="Фильм" className="movies-card__image" /></a>
         <label className="movies-card__button-wrapper">
           <input onChange={onSaveMovieClick} type="checkbox" checked={isSaved} className={likeBtnClass}/>
           <div className="movies-card__checkbox-wrapper">Сохранить</div>
