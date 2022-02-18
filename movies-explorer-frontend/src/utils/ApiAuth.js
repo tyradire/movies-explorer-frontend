@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://api.cinema.nomoredomains.work';
+import { BASE_URL } from '../utils/constants';
 
 export const register = ({ name, email, password }) => {
   return fetch(`${BASE_URL}/signup`, {

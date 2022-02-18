@@ -2,6 +2,7 @@ import './Register.css';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../../images/logo.svg';
+import { REG_EMAIL, REG_NAME } from '../../utils/constants';
 
 function Register( { onSubmitRegister, registerError } ) {
 
@@ -15,9 +16,6 @@ function Register( { onSubmitRegister, registerError } ) {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-  const regName = /[a-zA-Zа-яА-Я\s-]/;
-
   useEffect(() => {
     setPasswordError(registerError);
   }, [registerError])
@@ -29,11 +27,11 @@ function Register( { onSubmitRegister, registerError } ) {
 
   const changeName = (evt) => {
     setName(evt.target.value);
-    (!regName.test(evt.target.value)) ? setNameError('Поле имя содержит только латиницу, кириллицу, пробел или дефис') : setNameError('');
+    (!REG_NAME.test(evt.target.value)) ? setNameError('Поле имя содержит только латиницу, кириллицу, пробел или дефис') : setNameError('');
   }
   const changeEmail = (evt) => {
     setEmail(evt.target.value);
-    (!regex.test(evt.target.value)) ? setEmailError('Поле e-mail должно соответствовать шаблону почты') : setEmailError('');
+    (!REG_EMAIL.test(evt.target.value)) ? setEmailError('Поле e-mail должно соответствовать шаблону почты') : setEmailError('');
   }
   const changePassword = (evt) => {
     setPassword(evt.target.value);
@@ -47,7 +45,7 @@ function Register( { onSubmitRegister, registerError } ) {
   };
 
   useEffect(() => {
-    (!regex.test(email) || password.length < 2) ? setButtonDisabled(true) : setButtonDisabled(false);
+    (!REG_EMAIL.test(email) || password.length < 2) ? setButtonDisabled(true) : setButtonDisabled(false);
   }, [name, email, password])
 
   useEffect(() => {

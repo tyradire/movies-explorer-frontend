@@ -3,7 +3,7 @@ import './LoadMore.css';
 function LoadMore(props) {
 
   const clickOnBottonMore = () => {
-    props.setQueue(props.queue + props.step); //для каждого разрешения "шаг" отображения свой, добавить хук в этом компоненте?
+    props.setQueue(props.queue + props.step);
   }
 
   return (

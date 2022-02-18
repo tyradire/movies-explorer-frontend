@@ -14,6 +14,7 @@ import { Route, Switch, Redirect, useHistory, useLocation } from 'react-router-d
 import { register, authorize, getToken } from '../../utils/ApiAuth';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import api from '../../utils/MainApi';
+import ERRORS from '../../utils/constants';
 import './App.css';
 
 function App() {
@@ -34,14 +35,6 @@ function App() {
   const [registerError, setRegisterError] = useState('');
   const [loginError, setLoginError] = useState('');
   const [profileError, setProfileError] = useState('');
-
-  const errors = {
-    409: 'Email уже зарегистрирован',
-    400: 'Некорректные данные',
-    500: 'Ошибка на сервере',
-    401: 'Неверные почта или пароль',
-    404: 'Данные не найдены'
-  }
 
   useEffect(() => {
     if (!loggedIn) return;
@@ -109,13 +102,19 @@ function App() {
     };
   }, []);
 
-  const filter = (input, checked, moviesForSearch, setMovies) => {
-    localStorage.setItem('input', input)
+  const filterInput = (input, checked, moviesForSearch, setFiltredMovies, setDisplayedMovies) => {
     input = input.toLowerCase();
     const filtredMovies = moviesForSearch.filter((item) => (item.nameRU.toLowerCase().includes(input) || (item.nameEN ? item.nameEN.toLowerCase().includes(input) : false))
     && (checked ? item.duration > 40 : true)
     )
-    setMovies(filtredMovies)
+    setFiltredMovies(filtredMovies);
+    setDisplayedMovies(filtredMovies);
+    filtredMovies.length > 0 ? setIsEmptyResult(false) : setIsEmptyResult(true) ;
+  }
+
+  const filterCheckbox = (checked, moviesForFilter, setDisplayedMovies) => {
+    const filtredMovies = checked ? moviesForFilter.filter((item) => item.duration > 40) : moviesForFilter;
+    setDisplayedMovies(filtredMovies);
     filtredMovies.length > 0 ? setIsEmptyResult(false) : setIsEmptyResult(true) ;
   }
 
@@ -126,7 +125,7 @@ function App() {
     })
     .catch((err) => {
       console.log(err);
-      setRegisterError(errors[err]);
+      setRegisterError(ERRORS[err]);
     })
   }
 
@@ -138,7 +137,7 @@ function App() {
     })
     .catch((err) => {
       console.log(err);
-      setLoginError(errors[err]);
+      setLoginError(ERRORS[err]);
     })
   }
 
@@ -151,7 +150,7 @@ function App() {
     })
     .catch(err => {
       console.log(err)
-      setProfileError(errors[err]);
+      setProfileError(ERRORS[err]);
     })
   }
 
@@ -182,7 +181,8 @@ function App() {
             <ProtectedRoute exact path="/movies"
               component={Movies}
               loggedIn={loggedIn}
-              filter={filter}
+              filterInput={filterInput}
+              filterCheckbox={filterCheckbox}
               handleSaveMovie={handleSaveMovie}
               savedMovies={savedMovies}
               queue={queue}
@@ -194,7 +194,8 @@ function App() {
             <ProtectedRoute exact path="/saved-movies"
               component={SavedMovies}
               loggedIn={loggedIn}
-              filter={filter}
+              filterInput={filterInput}
+              filterCheckbox={filterCheckbox}
               handleSaveMovie={handleSaveMovie} 
               savedMovies={savedMovies}
               setSavedMovies={setSavedMovies}

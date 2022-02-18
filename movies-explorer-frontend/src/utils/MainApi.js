@@ -78,7 +78,7 @@ const api = new Api ({
   headers: {
     authorization: localStorage.getItem('jwt'),
     'Content-Type': 'application/json',
-    Accept: 'application/json', //nado??
+    Accept: 'application/json',
   }
 });
 

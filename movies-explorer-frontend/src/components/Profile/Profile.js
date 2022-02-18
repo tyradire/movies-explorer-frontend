@@ -1,14 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { CurrentUserContext } from '../../contexts/CurrentUserContext';
 import './Profile.css';
-
+import { REG_EMAIL, REG_NAME } from '../../utils/constants';
 
 function Profile({handleSignOut, handleEdit, profileError}) {
 
   const profile = React.useContext(CurrentUserContext);
-
-  const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-  const regName = /[a-zA-Zа-яА-Я\s-]/;
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -39,17 +36,17 @@ function Profile({handleSignOut, handleEdit, profileError}) {
   }, [profile])
 
   useEffect(() => {
-    ((name === profile.name && email === profile.email) || !regex.test(email)) ? setButtonDisabled(true) : setButtonDisabled(false);
+    ((name === profile.name && email === profile.email) || !REG_EMAIL.test(email)) ? setButtonDisabled(true) : setButtonDisabled(false);
   }, [name, email])
 
   const changeName = (evt) => {
     setName(evt.target.value);
-    (!regName.test(evt.target.value)) ? setNameError('Поле имя содержит только латиницу, кириллицу, пробел или дефис') : setNameError('');
+    (!REG_NAME.test(evt.target.value)) ? setNameError('Поле имя содержит только латиницу, кириллицу, пробел или дефис') : setNameError('');
   }
 
   const changeEmail = (evt) => {
     setEmail(evt.target.value);
-    (!regex.test(evt.target.value)) ? setEmailError('Поле e-mail должно соответствовать шаблону почты') : setEmailError('');
+    (!REG_EMAIL.test(evt.target.value)) ? setEmailError('Поле e-mail должно соответствовать шаблону почты') : setEmailError('');
   }
 
   return (

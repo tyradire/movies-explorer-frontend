@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import './SearchForm.css';
 
@@ -11,13 +11,13 @@ function SearchForm(props) {
     setInput(evt.target.value)
   }
 
-  const handleSubmit = (evt) => {
+  const handleSubmit = (evt) => { 
     evt.preventDefault();
-    props.filter(input, checked, props.movies, props.setMovies);
+    props.filterInput(input, checked, props.movies, props.setFiltredMovies, props.setDisplayedMovies);
   }
 
-   function changeShortFilmCheckbox()  {
-    props.filter(input, !checked, props.filtredMovies, props.setMovies);
+   function changeShortFilmCheckbox()  { 
+    props.filterCheckbox(!checked, props.filtredMovies, props.setDisplayedMovies);
     setChecked(!checked);
   }
 

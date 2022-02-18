@@ -2,6 +2,7 @@ import './Login.css';
 import logo from '../../images/logo.svg';
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { REG_EMAIL } from '../../utils/constants';
 
 function Login({ onSubmitLogin, loggedIn, loginError }) {
 
@@ -13,8 +14,6 @@ function Login({ onSubmitLogin, loggedIn, loginError }) {
   const [emailError, setEmailError] = useState('');
   const [passwordError, setPasswordError] = useState('');
 
-  const regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
-  
   useEffect(() => {
     setPasswordError(loginError);
   }, [loginError])
@@ -26,7 +25,7 @@ function Login({ onSubmitLogin, loggedIn, loginError }) {
 
   const changeEmail = (evt) => {
     setEmail(evt.target.value);
-    (!regex.test(evt.target.value)) ? setEmailError('Поле e-mail должно соответствовать шаблону почты') : setEmailError('');
+    (!REG_EMAIL.test(evt.target.value)) ? setEmailError('Поле e-mail должно соответствовать шаблону почты') : setEmailError('');
   }
 
   const changePassword = (evt) => {
@@ -35,7 +34,7 @@ function Login({ onSubmitLogin, loggedIn, loginError }) {
   }
 
   useEffect(() => {
-    (!regex.test(email) || password.length < 2) ? setButtonDisabled(true) : setButtonDisabled(false);
+    (!REG_EMAIL.test(email) || password.length < 2) ? setButtonDisabled(true) : setButtonDisabled(false);
   }, [email, password])
 
   const resetForm = () => {

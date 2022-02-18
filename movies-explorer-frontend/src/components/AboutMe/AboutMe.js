@@ -17,7 +17,7 @@ function AboutMe() {
           </div>
           <div className="about-me__social">
             <a href="https://facebook.com" className="about-me__link">Facebook</a>
-            <a href="https://facebook.com" className="about-me__link">Github</a>
+            <a href="https://github.com/tyradire" className="about-me__link">Github</a>
           </div>
         </div>
         <img src={profilePhoto} alt="Фото профиля" className="about-me__photo"/>

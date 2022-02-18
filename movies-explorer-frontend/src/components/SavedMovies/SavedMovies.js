@@ -3,9 +3,10 @@ import SearchForm from '../SearchForm/SearchForm';
 import MoviesCardList from '../MoviesCardList/MoviesCardList';
 import React, { useEffect, useState } from 'react';
 
-function SavedMovies({ savedMovies, queue, handleSaveMovie, filter, isEmptyResult, setIsEmptyResult }) {
+function SavedMovies({ savedMovies, queue, handleSaveMovie, filterInput, filterCheckbox, isEmptyResult, setIsEmptyResult }) {
 
   const [filtredMovies, setFiltredMovies] = useState(savedMovies);
+  const [displayedMovies, setDisplayedMovies] = useState(savedMovies);
 
   useEffect(() => {
     setIsEmptyResult(false);
@@ -13,19 +14,23 @@ function SavedMovies({ savedMovies, queue, handleSaveMovie, filter, isEmptyResul
 
   useEffect(() => {
     if (filtredMovies.length === 0) {
-      setFiltredMovies(savedMovies); 
+      setFiltredMovies(savedMovies);
+      setDisplayedMovies(savedMovies);
       return;
     }
-    setFiltredMovies(filtredMovies.filter((elem) => {
+    const newFiltredMovies = filtredMovies.filter((elem) => {
       return savedMovies.some((item) => item.movieId == elem.movieId);
-    }));
+    });
+    setFiltredMovies(newFiltredMovies);
+    setDisplayedMovies(newFiltredMovies);
   }, [savedMovies])
 
   return (
     <div className="saved-movies">
-      <SearchForm filter={filter} movies={savedMovies} filtredMovies={filtredMovies} setMovies={setFiltredMovies} checked={null}/>
+      <SearchForm filterInput={filterInput} filterCheckbox={filterCheckbox} movies={savedMovies} filtredMovies={filtredMovies}
+       setFiltredMovies={setFiltredMovies} setDisplayedMovies={setDisplayedMovies} checked={null}/>
       {isEmptyResult ? <p className='movies-cardlist__empty'>«Ничего не найдено»</p> : ''}
-      <MoviesCardList moviesArray={filtredMovies} queue={queue} handleSaveMovie={handleSaveMovie} likeBtnClass={`movies-card__saved-checkbox-input`}/>
+      <MoviesCardList moviesArray={displayedMovies} queue={queue} handleSaveMovie={handleSaveMovie} likeBtnClass={`movies-card__saved-checkbox-input`}/>
     </div>
   );
 }
