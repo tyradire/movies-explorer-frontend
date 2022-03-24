@@ -19,6 +19,6 @@
 - Хранение данных (jwt, localStorage)  
 - Postman  
 - ESLint  
-### Запуск  
+## Запуск  
 `npm start`  
 Проект запустится локально http://localhost:3000  
