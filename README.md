@@ -21,4 +21,5 @@
 - ESLint  
 ## Запуск  
 `npm start`  
-Проект запустится локально http://localhost:3000  
+Проект запустится локально  
+http://localhost:3000  
