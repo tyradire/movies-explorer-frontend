@@ -59,8 +59,8 @@ function Movies({ filterInput, filterCheckbox, queue, handleSaveMovie, step, set
       request={JSON.parse(localStorage.getItem('inputRequest')) ? JSON.parse(localStorage.getItem('inputRequest')).input : null}
       checked={JSON.parse(localStorage.getItem('inputRequest')) ? JSON.parse(localStorage.getItem('inputRequest')).checked : null} />
       {isLoading ? <Preloader /> : ''}
-      {isEmptyResult ? <p className='movies-cardlist__empty'>«Ничего не найдено»</p> : ''}
       <MoviesCardList moviesArray={displayedMovies} queue={queue} handleSaveMovie={handleSaveMovie} isLoading={isLoading} likeBtnClass={`movies-card__checkbox-input`}/>
+      {isEmptyResult ? <p className='movies__empty'>«Ничего не найдено»</p> : ''}
       {(queue <= filtredMovies.length) ? <LoadMore queue={queue} step={step} setQueue={setQueue} /> : ''}
     </div>
   );
