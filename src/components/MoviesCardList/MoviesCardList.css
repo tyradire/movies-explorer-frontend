@@ -1,11 +1,13 @@
 .movies-cardlist {
-  width: 100%;
+  width: 1140px;
+  margin: 0 auto;
   box-sizing: border-box;
-  margin: 80px 0 28px;
+  padding: 80px 0 28px;
   display: grid;
   justify-content: center;
   grid-template-columns: repeat(3, 360px);
   gap: 60px 30px;
+  border-top: 1px solid rgba(170,170,170, .2);
 }
 
 .movies-cardlist__empty {
