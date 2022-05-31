@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 function NotFound() {
   const history = useHistory();
   const goBackHandler = () => {
-    history.goBack()
+    history.go(-2);
   }
   return (
     <div className="not-found">

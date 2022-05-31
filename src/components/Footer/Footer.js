@@ -9,7 +9,6 @@ function Footer() {
         <ul className="footer__links">
           <li><a href="https://practicum.yandex.ru/profile/web/" target="_blank" rel="noopener noreferrer" className="footer__link">Яндекс.Практикум</a></li>
           <li><a href="https://github.com/tyradire/" target="_blank" rel="noopener noreferrer" className="footer__link">Github</a></li>
-          <li><a href="vk.com" target="_blank" rel="noopener noreferrer" className="footer__link">Vkontakte</a></li>
         </ul>
       </div>
     </div>
