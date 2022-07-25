@@ -27,7 +27,7 @@
 
 .about-me__photo {
   width: 270px;
-  height: 327px;
+  height: 360px;
   border-radius: 10px;
 }
 
@@ -52,6 +52,10 @@
   font-size: 14px;
   line-height: 22px;
   color: #fff;
+}
+
+.about-me__social {
+  margin-top: 20px;
 }
 
 .about-me__link {

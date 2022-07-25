@@ -1,8 +1,10 @@
+import { useRef } from 'react';
 import './AboutProject.css';
 
-function AboutProject() {
+function AboutProject({ scroll }) {
+
   return (
-    <div className="about-project">
+    <div className="about-project" ref={scroll}>
       <h2 className="about-project__title">О проекте</h2>
       <div className="about-project__wrapper">
         <article className="about-project__cell">

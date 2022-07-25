@@ -41,8 +41,9 @@
   height: 304px;
 }
 
-.promo__more {
-  width: 129px;
+.promo__link {
+  text-decoration: none;
+  padding: 10px;
   margin-top: 84px;
   font-weight: 500;
   font-size: 12px;
@@ -54,10 +55,9 @@
   background-color: transparent;
   cursor: pointer;
   color: #fff;
-  padding: 10px 0;
 }
 
-.promo__more:hover {
+.promo__link:hover {
   background-color: #3DDC84;
   border: 1px solid #3DDC84;
   color: #000;
